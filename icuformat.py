@@ -86,8 +86,8 @@ class Formatter(object):
     def spell_out(self, number):
         return self.get_number_format(URBNFRuleSetTag.SPELLOUT).format(number)
 
-    def currency(self, amount, currency):
-        return self.get_currency_format(currency).format(amount)
+    def currency(self, number, currency):
+        return self.get_currency_format(currency).format(number)
 
     # formats
 
