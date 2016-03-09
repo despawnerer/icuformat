@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from datetime import datetime, date, time
+from functools import wraps
 from icu import (
     Locale,
     DateInterval,
@@ -14,6 +15,19 @@ from icu import (
 
 
 __all__ = ['Formatter']
+
+
+def cache_by_locale(f):
+    cache = {}
+
+    @wraps(f)
+    def wrapper(formatter, *args, **kwargs):
+        key = (formatter.locale.getName(), args, tuple(kwargs.items()))
+        if key not in cache:
+            cache[key] = f(formatter, *args, **kwargs)
+        return cache[key]
+
+    return wrapper
 
 
 class Formatter(object):
@@ -77,30 +91,37 @@ class Formatter(object):
 
     # formats
 
+    @cache_by_locale
     def get_date_format(self, style):
         return DateFormat.createDateInstance(style, self.locale)
 
+    @cache_by_locale
     def get_time_format(self, style):
         return DateFormat.createDateInstance(style, self.locale)
 
+    @cache_by_locale
     def get_datetime_format(self, date_style, time_style):
         return DateFormat.createDateTimeInstance(
             date_style, time_style, self.locale)
 
+    @cache_by_locale
     def get_date_interval_format(self):
         return DateIntervalFormat.createInstance('yMMMMd', self.locale)
 
+    @cache_by_locale
     def get_datetime_interval_format(self):
         hour_format = detect_hour_format(self.locale)
         return DateIntervalFormat.createInstance(
             'yMMMMd%sm' % hour_format, self.locale)
 
+    @cache_by_locale
     def get_number_format(self, rule_tag=None):
         if rule_tag is None:
             return NumberFormat.createInstance(self.locale)
         else:
             return RuleBasedNumberFormat(rule_tag, self.locale)
 
+    @cache_by_locale
     def get_currency_format(self, currency):
         format_ = NumberFormat.createCurrencyInstance(self.locale)
         format_.setCurrency(currency)
