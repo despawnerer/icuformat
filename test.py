@@ -1,23 +1,23 @@
 from datetime import date, datetime, time
-from icuformat import Formatter
+from icuformat import Format
 
-en = Formatter('en_US')
-ru = Formatter('ru')
+en = Format('en_US')
+ru = Format('ru')
 
 for formatter in (ru, en):
     print()
     print(formatter.locale.getDisplayName())
     print("-- dates")
-    print(formatter.long_date(date(2016, 3, 5)))
-    print(formatter.medium_date(date(2016, 3, 5)))
-    print(formatter.short_date(date(2016, 3, 5)))
+    print(formatter.date(date(2016, 3, 5), format='short'))
+    print(formatter.date(date(2016, 3, 5), format='medium'))
+    print(formatter.date(date(2016, 3, 5), format='long'))
     print("-- times")
-    print(formatter.short_time(time(10, 0)))
-    print(formatter.long_time(time(15, 0)))
+    print(formatter.time(time(10, 0), format='short'))
+    print(formatter.time(time(15, 0), format='long'))
     print("-- datetimes")
-    print(formatter.short_datetime(datetime(2010, 5, 6, 15, 0)))
-    print(formatter.medium_datetime(datetime(2010, 5, 6, 15, 0)))
-    print(formatter.long_datetime(datetime(2010, 5, 6, 15, 0)))
+    print(formatter.datetime(datetime(2010, 5, 6, 15, 0), format='short'))
+    print(formatter.datetime(datetime(2010, 5, 6, 15, 0), format='medium', time_format='short'))
+    print(formatter.datetime(datetime(2010, 5, 6, 15, 0), format='long'))
     print("-- ranges")
     print(formatter.date_range(date(2015, 5, 6), date(2015, 7, 5)))
     print(formatter.datetime_range(
