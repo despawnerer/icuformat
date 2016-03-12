@@ -5,7 +5,7 @@ icuformat
 
 The API seeks to be a drop-in replacement for Babel with useful additions, but is largely incomplete right now.
 
-It is, on average, seems to be 1.5x faster than Babel at formatting dates and times, and more than 10x faster with numbers and currencies.
+It seems, on average, to be 1.5x faster than Babel at formatting dates and times, and more than 10x faster with numbers and currencies.
 
 
 Example
