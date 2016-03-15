@@ -24,6 +24,7 @@ setup(
     ],
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     install_requires=[
-        "PyICU>=1.9.0"
+        "PyICU>=1.9.0",
+        "functools32>=3.0",
     ]
 )
